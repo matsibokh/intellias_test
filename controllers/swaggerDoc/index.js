@@ -2,6 +2,8 @@ const express = require("express");
 const swaggerUi = require("swagger-ui-express");
 const swaggerJSDoc = require("swagger-jsdoc");
 const router = express.Router();
+const rootPath = "../../";
+const config = require(rootPath + "config.js");
 
 const swaggerDefinition = {
     info: {
@@ -9,19 +11,19 @@ const swaggerDefinition = {
         description: "(RESTful API with Swagger)",//API to allow JWT authentication and authorization
         version: "1.0.0"
     },
-    host: "localhost:3000",
+    host: "localhost:" + config.port,
     basePath: "/",
     "schemes": [
         "http",
         "https"
     ],
 
-    // Appears in authentifivcate modal popup
+    // Appears in authentificate modal popup
     securityDefinitions: {
-        bearerAuth: {
+        jwt: {
             type: "apiKey",
-            name: "token",
-            in: "header"
+            in: "header",
+            name: config.tokenName
         }
     }
 };

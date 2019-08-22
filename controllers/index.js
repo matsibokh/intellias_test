@@ -1,9 +1,10 @@
 const express = require("express");
-const path = require('path');
-
 const router = express.Router();
+const rootPath = "../";
 // Add swagger documentation route
 router.use("/swagger", require("./swaggerDoc"));
+
+router.use("*", require(rootPath + "middlewares/authorization"));
 router.use("/events", require("./events"));
 router.get("*", function (req, res) {
     const message = "No service found";
