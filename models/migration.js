@@ -10,24 +10,23 @@ const createDB = function() {
         console.log('Connected to the events database.');
     });
     return new Promise(resolve =>{
-        db.run('DROP TABLE events', function(err){
-            if(!err) {
-                db.run('CREATE TABLE events(' +
-                    'id INTEGER PRIMARY KEY, ' +
-                    'page_id INTEGER DEFAULT NULL, ' +
-                    'user_id INTEGER DEFAULT NULL, ' +
-                    'timestamp TEXT DEFAULT CURRENT_TIME, ' +
-                    'browser TEXT DEFAULT NULL, ' +
-                    'country TEXT DEFAULT NULL);',
-                    function (err) {
-                        if (!err) {
-                            db.close();
-                            console.log('Database was created.');
-                            resolve(true);
-                        }
+        db.run('DROP TABLE events', function(){
+            console.log('Database was drop.');
+            db.run('CREATE TABLE events(' +
+                'id INTEGER PRIMARY KEY, ' +
+                'page_id INTEGER DEFAULT NULL, ' +
+                'user_id INTEGER DEFAULT NULL, ' +
+                'timestamp TEXT DEFAULT CURRENT_TIME, ' +
+                'browser TEXT DEFAULT NULL, ' +
+                'country TEXT DEFAULT NULL);',
+                function (err) {
+                    if (!err) {
+                        db.close();
+                        console.log('Database was created.');
+                        resolve(true);
                     }
-                )
-            }
+                }
+            )
         });
     })
 };
@@ -129,6 +128,7 @@ const addTestData = function() {
         sql = sql.substr(0, sql.length - 2) + ")";
         db.run(sql, dataValues);
     }
+    console.log('Data was added.');
     db.close();
 };
 
